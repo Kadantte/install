@@ -8,7 +8,7 @@
 #     curl https://localai.io/install.sh | sh
 #
 #   With environment variables:
-#     DOCKER_INSTALL=true USE_AIO=true API_KEY=your-key PORT=8080 THREADS=4 curl https://localai.io/install.sh | sh
+#     DOCKER_INSTALL=true USE_AIO=true API_KEY=your-key PORT=8081 THREADS=4 curl https://localai.io/install.sh | sh
 #
 #   To uninstall:
 #     curl https://localai.io/install.sh | sh -s -- --uninstall
@@ -18,7 +18,7 @@
 #   USE_AIO       - Set to "true" to use the all-in-one LocalAI image (default: false)
 #   USE_VULKAN    - Set to "true" to use Vulkan GPU support (default: false)
 #   API_KEY       - API key for securing LocalAI access (default: none)
-#   PORT          - Port to run LocalAI on (default: 8080)
+#   PORT          - Port to run LocalAI on (default: 8081)
 #   THREADS       - Number of CPU threads to use (default: auto-detected)
 #   MODELS_PATH   - Path to store models (default: /usr/share/local-ai/models)
 #   CORE_IMAGES   - Set to "true" to download core LocalAI images (default: false)
@@ -160,7 +160,7 @@ uninstall_localai() {
 # DOCKER_INSTALL - set to "true" to install Docker images
 # USE_AIO - set to "true" to install the all-in-one LocalAI image
 # USE_VULKAN - set to "true" to use Vulkan GPU support
-PORT=${PORT:-8080}
+PORT=${PORT:-8081}
 
 docker_found=false
 if available docker ; then
@@ -669,7 +669,7 @@ install_docker() {
             -e API_KEY=$API_KEY \
             -e THREADS=$THREADS \
             $envs \
-            -d -p $PORT:8080 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
+            -d -p $PORT:8081 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
     elif [ "$HAS_CUDA" ]; then
         # Default to CUDA 12
         IMAGE_TAG=${LOCALAI_VERSION}-gpu-nvidia-cuda-12
@@ -696,7 +696,7 @@ install_docker() {
             -e API_KEY=$API_KEY \
             -e THREADS=$THREADS \
             $envs \
-            -d -p $PORT:8080 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
+            -d -p $PORT:8081 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
     elif [ "$HAS_AMD" ]; then
         IMAGE_TAG=${LOCALAI_VERSION}-gpu-hipblas
         # AIO
@@ -713,7 +713,7 @@ install_docker() {
             -e API_KEY=$API_KEY \
             -e THREADS=$THREADS \
             $envs \
-            -d -p $PORT:8080 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
+            -d -p $PORT:8081 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
     elif [ "$HAS_INTEL" ]; then
         IMAGE_TAG=${LOCALAI_VERSION}-gpu-intel
         # AIO
@@ -728,7 +728,7 @@ install_docker() {
             -e API_KEY=$API_KEY \
             -e THREADS=$THREADS \
             $envs \
-            -d -p $PORT:8080 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
+            -d -p $PORT:8081 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
 
     else
         IMAGE_TAG=${LOCALAI_VERSION}
@@ -745,7 +745,7 @@ install_docker() {
                 -e API_KEY=$API_KEY \
                 -e THREADS=$THREADS \
                 $envs \
-                -d -p $PORT:8080 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
+                -d -p $PORT:8081 --name local-ai localai/localai:$IMAGE_TAG $STARTCOMMAND
     fi
 
     install_success
